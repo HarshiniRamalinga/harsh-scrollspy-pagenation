@@ -20,14 +20,16 @@
         <section class="about" id="about">
             <div class="about_container">
                 <div class="images">
-                <img src="harry.jpg" alt="Harry" class="image">
-                <div id="over_1" class="overlay">Harry Potter</div>
-            </div>
-                <div class="images"><img src="hermione.jpg" alt="Hermione" class="image">
-                    <div id="over_2" class="overlay">Hermione Granger</div></div>
+                    <img src="harry.jpg" alt="Harry" class="image">
+                    <div id="over_1" class="overlay">Harry Potter</div>
+                </div>
+                <div class="images">
+                    <img src="hermione.jpg" alt="Hermione" class="image">
+                    <div id="over_2" class="overlay">Hermione Granger</div>
+                </div>
                 <div class="images">
                     <img src="ron.jpg" alt="Ron" class="image">
-                <div id="over_3" class="overlay">Ronald Weasley</div>
+                    <div id="over_3" class="overlay">Ronald Weasley</div>
                 </div>
             </div>
         </section>
@@ -58,6 +60,7 @@
         <section id="contact">Contact Us</section>
 
         <script>
+            // scrollspy
             let section = document.querySelectorAll('section');
             let navLinks = document.querySelectorAll('header nav a');
             window.onscroll = () =>{
@@ -75,6 +78,7 @@
                 });
             };
 
+            // Pagenation
             let jsp_current_page = 1;
             let jsp_json_object = [
             { json_item: "Harshini"},
@@ -145,6 +149,7 @@
             jsp_change_page(1);
         };
 
+        // image upload
         const image_input = document.querySelector("#image_input");
         var uploaded_image;
         image_input.addEventListener('change', function(){
@@ -155,6 +160,7 @@
             });
             reader.readAsDataURL(this.files[0]);
         });
+        
         </script>
     </body>
 </html>
