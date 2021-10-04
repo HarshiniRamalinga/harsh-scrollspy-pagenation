@@ -34,12 +34,16 @@ section{
     font-weight: bolder;
     padding-bottom: 70px;
 }
+.services{
+    background-color: lemonchiffon;
+}
 .container{
     font-size: medium;
     color: black;
 }
 #listing-table{
     box-sizing: border-box;
+    background-color: white;
     border: 1px solid rgba(0, 0, 0, .11);
 }
 #listing-table :nth-child(){
@@ -104,4 +108,5 @@ td{
 }
 .about{
     justify-content: left;
+    background-color:lavender;
 }
