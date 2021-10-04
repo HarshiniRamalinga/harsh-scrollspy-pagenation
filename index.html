@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>ScrollSpy</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <header>
+            <nav>
+                <a class="active" href="#home">Home</a>
+                <a href="#about">About</a>
+                <a href="#services">Pagenation</a>
+                <a href="#gallery">Gallery</a>
+                <a href="#blogs">Blogs</a>
+                <a href="#contact">Contact Us</a>
+            </nav>
+        </header>
+        <section id="home">Home</section>
+        <section class="about" id="about">
+            <div class="about_container">
+                <div class="images">
+                <img src="harry.jpg" alt="Harry" class="image">
+                <div id="over_1" class="overlay">Harry Potter</div>
+            </div>
+                <div class="images"><img src="hermione.jpg" alt="Hermione" class="image">
+                    <div id="over_2" class="overlay">Hermione Granger</div></div>
+                <div class="images">
+                    <img src="ron.jpg" alt="Ron" class="image">
+                <div id="over_3" class="overlay">Ronald Weasley</div>
+                </div>
+            </div>
+        </section>
+        <section id="services" class="services">
+            <div class="container">
+                <div><h3 style="color: brown; text-align: center;">Name List</h3></div> 
+                <br>
+                <div class="table-list" >
+                    <table >
+                       <tbody id="listing-table">
+                       </tbody>
+                    </table>
+                </div>
+                <div>
+                    <p>
+                        <a href="#" id="btn-prev">Prev</a>
+                        <a href="#" id="btn-next">Next</a>
+                    </p>
+                    <p>Page <span id="page"></span></p>
+                </div>
+             </div>
+        </section>
+        <section id="gallery">
+            <input type="file" id="image_input" accept="image/jpg , image/png , image/jpeg">
+            <div id="display_image"></div>
+        </section>
+        <section id="blogs">Blogs</section>
+        <section id="contact">Contact Us</section>
+
+        <script>
+            let section = document.querySelectorAll('section');
+            let navLinks = document.querySelectorAll('header nav a');
+            window.onscroll = () =>{
+                section.forEach(sec =>{
+                    let top = window.scrollY;
+                    let offset = sec.offsetTop - 150;
+                    let height = sec.offsetHeight;
+                    let id = sec.getAttribute('id');
+                    if(top >= offset && top < offset + height){
+                        navLinks.forEach(links =>{
+                            links.classList.remove('active');
+                            document.querySelector('header nav a[href*='+ id +']').classList.add('active');
+                        });
+                    };
+                });
+            };
+
+            let jsp_current_page = 1;
+            let jsp_json_object = [
+            { json_item: "Harshini"},
+            { json_item: "Shafreen"},
+            { json_item: "Sharnika"},
+            { json_item: "Keerthi"},
+            { json_item: "Tharani"},
+            { json_item: "Kamalakshmi"},
+            { json_item: "Suriya"},
+            { json_item: "Harini"},
+            { json_item: "Malini"},
+            { json_item: "Deepika"},
+            { json_item: "Naveena sree"},
+            { json_item: "Dhivya"},
+            { json_item: "Abi"},
+            { json_item: "Kalpitha"},
+            { json_item: "Aiswarya"},
+            { json_item: "Pozhil"},
+            { json_item: "Sendhuvarthani"},
+            { json_item: "Naraayani"},
+            { json_item: "Sathya prabha"},
+            { json_item: "Navaneetha"},
+        ];
+        const jsp_records_per_page = jsp_json_object.length/4;
+        function jsp_num_pages() {
+            return Math.ceil(jsp_json_object.length / jsp_records_per_page);
+        }
+        function jsp_prev_page() {
+            if (jsp_current_page > 1) {
+                jsp_current_page--;
+                jsp_change_page(jsp_current_page);
+            }
+        }
+        function jsp_next_page() {
+            if (jsp_current_page < jsp_num_pages()) {
+                jsp_current_page++;
+                jsp_change_page(jsp_current_page);
+            }
+        }
+        function jsp_change_page(page) {
+            const btn_prev = document.getElementById('btn-prev');
+            const btn_next = document.getElementById('btn-next');
+            const listing_table = document.getElementById('listing-table');
+            let page_span = document.getElementById('page');
+            if (page < 1) {
+                page = 1;
+            }
+            if (page > jsp_num_pages()) {
+                page = jsp_num_pages();
+            }
+            listing_table.innerHTML = '';
+            for (let i = (page - 1) * jsp_records_per_page; i < (page * jsp_records_per_page) && i < jsp_json_object.length; i++) {
+                listing_table.innerHTML += `<td>${jsp_json_object[i].json_item}</td>`;
+            }
+            page_span.innerHTML = `${page}/${jsp_num_pages()}`;
+            btn_prev.style.display = (page === 1) ? 'none' : 'inline-block';
+            btn_next.style.display = (page === jsp_num_pages()) ? 'none' : 'inline-block';
+        }
+        window.onload = () => {
+            document.getElementById('btn-prev').addEventListener('click', (e) => {
+                e.preventDefault();
+                jsp_prev_page();
+            });
+            document.getElementById('btn-next').addEventListener('click', (e) => {
+                e.preventDefault();
+                jsp_next_page();
+            });
+            jsp_change_page(1);
+        };
+
+        const image_input = document.querySelector("#image_input");
+        var uploaded_image;
+        image_input.addEventListener('change', function(){
+            const reader = new FileReader();
+            reader.addEventListener('load',() => {
+                uploaded_image = reader.result;
+                document.querySelector("#display_image").style.backgroundImage = `url(${uploaded_image})`;
+            });
+            reader.readAsDataURL(this.files[0]);
+        });
+        </script>
+    </body>
+</html>
